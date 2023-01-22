@@ -5,6 +5,11 @@ exports.getTourService = async () => {
   return { tours };
 };
 
+exports.trendingTourServices = async () => {
+  const trendingTours = await Tour.find({}).sort({views: -1}).limit(3)
+  return { trendingTours };
+};
+
 exports.getTourDetailService = async (id) => {
   const result = await Tour.findById(id);
   return result;

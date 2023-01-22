@@ -4,8 +4,8 @@ const {
   createTourServices,
   updateTourServices,
   getTourDetailService,
-  updateViewCountServices,
   deleteTourServices,
+  trendingTourServices,
 } = require("../services/tour.services");
 
 exports.getTours = async (req, res, next) => {
@@ -28,7 +28,7 @@ exports.getTours = async (req, res, next) => {
 exports.getTourDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
-    
+
     if (!isValidObjectId(id)) {
       return res.status(400).send({ success: false, error: "Not a valid id." });
     }
@@ -111,6 +111,23 @@ exports.deleteTour = async (req, res, next) => {
     res.status(400).send({
       status: "fail",
       message: "couldn't delete the tour",
+      error: error.message,
+    });
+  }
+};
+
+exports.getTrendingTour = async (req, res) => {
+  try {
+    const trendingTours = await trendingTourServices();
+
+    res.status(200).send({
+      status: "success",
+      data: trendingTours,
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "fail",
+      message: "can't get the data",
       error: error.message,
     });
   }
