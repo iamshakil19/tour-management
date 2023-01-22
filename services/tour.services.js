@@ -1,4 +1,4 @@
-const Tour = require("../models/Tour");
+const Tour = require("../models/tour.model");
 
 exports.getTourService = async () => {
   const tours = await Tour.find();
@@ -6,8 +6,8 @@ exports.getTourService = async () => {
 };
 
 exports.getTourDetailService = async (id) => {
-  const result = await Tour.findOne({ _id: id });
-  return { result };
+  const result = await Tour.findById(id);
+  return result;
 };
 
 exports.createTourServices = async (data) => {

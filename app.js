@@ -1,17 +1,20 @@
-const express = require('express');
-const app = express()
-const cors = require("cors")
-const { default: mongoose } = require('mongoose');
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const { default: mongoose } = require("mongoose");
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 
-const tourRoute = require("./routes/tour.route")
+const tourRoute = require("./routes/tour.route");
 
 app.get("/", (req, res) => {
-    res.send("Route is working!")
-})
+  res.send({
+    success: true,
+    message: "Welcome to the Tour Management System server",
+  });
+});
 
-app.use("/api/v1/tours", tourRoute)
+app.use("/api/v1/tours", tourRoute);
 
 module.exports = app;

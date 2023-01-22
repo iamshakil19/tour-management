@@ -32,15 +32,15 @@ const tourSchema = mongoose.Schema(
         message: "country value can't be {VALUE}",
       },
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
   }
 );
-
-tourSchema.methods.logger = function () {
-  console.log(`Data save for ${this.name}`);
-};
 
 const Tour = mongoose.model("Tour", tourSchema);
 

@@ -3,6 +3,7 @@ const {
   createTourServices,
   updateTourServices,
   getTourDetailService,
+  updateViewCountServices,
 } = require("../services/tour.services");
 
 exports.getTours = async (req, res, next) => {
@@ -22,7 +23,7 @@ exports.getTours = async (req, res, next) => {
   }
 };
 
-exports.tourDetail = async (req, res, next) => {
+exports.getTourDetail = async (req, res, next) => {
   try {
     const {id} = req.params
     const tour = await getTourDetailService(id);
