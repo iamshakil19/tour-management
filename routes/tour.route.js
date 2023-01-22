@@ -8,6 +8,7 @@ router.route("/").get(tourController.getTours).post(tourController.createTour);
 router
   .route("/:id")
   .get(tourViewCount, tourController.getTourDetail)
-  .patch(tourController.updateTour);
+  .patch(tourController.updateTour)
+  .delete(tourController.deleteTour)
 
 module.exports = router;

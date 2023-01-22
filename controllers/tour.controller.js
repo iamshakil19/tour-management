@@ -1,9 +1,11 @@
+const { isValidObjectId } = require("mongoose");
 const {
   getTourService,
   createTourServices,
   updateTourServices,
   getTourDetailService,
   updateViewCountServices,
+  deleteTourServices,
 } = require("../services/tour.services");
 
 exports.getTours = async (req, res, next) => {
@@ -25,7 +27,11 @@ exports.getTours = async (req, res, next) => {
 
 exports.getTourDetail = async (req, res, next) => {
   try {
-    const {id} = req.params
+    const { id } = req.params;
+    
+    if (!isValidObjectId(id)) {
+      return res.status(400).send({ success: false, error: "Not a valid id." });
+    }
     const tour = await getTourDetailService(id);
 
     res.status(200).send({
@@ -43,7 +49,6 @@ exports.getTourDetail = async (req, res, next) => {
 
 exports.createTour = async (req, res, next) => {
   try {
-    console.log(req.body);
     const result = await createTourServices(req.body);
 
     res.status(200).send({
@@ -63,6 +68,10 @@ exports.createTour = async (req, res, next) => {
 exports.updateTour = async (req, res, next) => {
   try {
     const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      return res.status(400).send({ success: false, error: "Not a valid id." });
+    }
+
     const result = await updateTourServices(id, req.body);
 
     res.status(200).send({
@@ -74,6 +83,34 @@ exports.updateTour = async (req, res, next) => {
     res.status(400).send({
       status: "fail",
       message: "could't update the product",
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteTour = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+      return res.status(400).send({ success: false, error: "Not a valid id." });
+    }
+    const result = await deleteTourServices(id);
+    if (!result.deletedCount) {
+      return res.status(400).send({
+        status: "fail",
+        error: "Couldn't delete the product",
+      });
+    }
+
+    res.status(200).send({
+      status: "success",
+      message: "Tour delete successfully",
+    });
+  } catch (error) {
+    res.status(400).send({
+      status: "fail",
+      message: "couldn't delete the tour",
       error: error.message,
     });
   }

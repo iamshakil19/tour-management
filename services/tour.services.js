@@ -23,3 +23,8 @@ exports.updateTourServices = async (tourId, data) => {
   );
   return result;
 };
+
+exports.deleteTourServices = async (tourId) => {
+  const result = await Tour.deleteOne({ _id: tourId });
+  return result;
+};
