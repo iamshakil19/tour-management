@@ -32,6 +32,10 @@ const tourSchema = mongoose.Schema(
         message: "country value can't be {VALUE}",
       },
     },
+    image: {
+      type: String,
+      required: [true, "A tour must have images"],
+    },
     views: {
       type: Number,
       default: 0,
